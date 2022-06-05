@@ -6,13 +6,13 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/03 20:44:16 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:04:12 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_fill_struct(int argc, char **argv, t_philo *data)
+void	ft_fill_struct(int argc, char **argv, t_data *data)
 {
 	ft_init_struct(data);
 	data->number_of_philosophers = ft_atoi(argv[1]);
@@ -23,7 +23,7 @@ void	ft_fill_struct(int argc, char **argv, t_philo *data)
 		data->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
 }
 
-void	ft_init_struct(t_philo *data)
+void	ft_init_struct(t_data *data)
 {
 	data->number_of_philosophers = 0;
 	data->time_to_die = 0;

@@ -6,7 +6,7 @@ CC			=	gcc
 
 RM			=	rm -f
 
-CFLAGS		= 	-Wall -Wextra -Werror
+CFLAGS		= 	-Wall -Wextra -Werror -g3 
 
 CPPFLAGS	=	-I./includes
 
@@ -15,7 +15,7 @@ NAME		= 	philo
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME) -lpthread 
 
 clean:
 	$(RM) $(OBJS)
