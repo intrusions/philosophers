@@ -1,4 +1,6 @@
-SRCS		=	philosophers.c utils.c
+SRCS		=	philosophers.c				\
+				srcs/utils.c				\
+				srcs/initialization.c		\
 
 OBJS		=	$(SRCS:.c=.o)
 
@@ -6,16 +8,18 @@ CC			=	gcc
 
 RM			=	rm -f
 
-CFLAGS		= 	-Wall -Wextra -Werror -g3 
+CFLAGS		= 	-Wall -Wextra -Werror -g3
 
 CPPFLAGS	=	-I./includes
+
+TH_FLAGS	=	-lpthread
 
 NAME		= 	philo
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME) -lpthread 
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJS) -o $(NAME) $(TH_FLAGS)
 
 clean:
 	$(RM) $(OBJS)

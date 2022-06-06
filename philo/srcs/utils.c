@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/04 18:04:12 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:00:35 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-void	ft_fill_struct(int argc, char **argv, t_data *data)
-{
-	ft_init_struct(data);
-	data->number_of_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->number_of_times_each_philosophers_must_eat = ft_atoi(argv[5]);
-}
-
-void	ft_init_struct(t_data *data)
-{
-	data->number_of_philosophers = 0;
-	data->time_to_die = 0;
-	data->time_to_eat = 0;
-	data->time_to_sleep = 0;
-	data->number_of_times_each_philosophers_must_eat = 0;
-}
 
 int	ft_atoi(const char *str)
 {
