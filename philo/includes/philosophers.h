@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/06 19:17:01 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/06 23:17:55 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int			id;
 	pthread_t	philo_thread;
+	int			id;
 	int			eat;
 	int			think;
 	int			sleep;

@@ -17,14 +17,16 @@ t_bool	ft_check_arg(int argc, char **argv)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		j = 0;
 		while (argv[i][j])
 		{
-			if (argv[i][j] < '0' && argv[i][j] > '9')
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9')) {
+				printf("petit test\n");
 				return (0);
+			}
 			j++;
 		}
 		i++;
