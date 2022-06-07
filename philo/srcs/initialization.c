@@ -34,7 +34,7 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 	if (pthread_mutex_init(&data->mutex, NULL))
 		return (0);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
-	if(!data->fork)
+	if (!data->fork)
 		return (0);
 	if (!ft_init_fork(data))
 		return (0);
@@ -44,7 +44,7 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 t_philo	*ft_fill_philo_struct(t_data *data)
 {
 	int		i;
-	t_philo *philo;
+	t_philo	*philo;
 
 	i = 0;
 	philo = malloc(sizeof(t_philo) * (data->number_of_philosophers));
@@ -82,7 +82,8 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
-		if (pthread_create(&philo[i].philo_thread, NULL, (void *)&ft_loop, philo + i))
+		if (pthread_create(&philo[i].philo_thread, NULL, \
+		(void *)&ft_loop, philo + i))
 			return (0);
 		i++;
 	}

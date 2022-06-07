@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/08 00:48:20 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/08 00:59:00 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	ft_eat(t_philo *philo)
 	usleep(philo->data_ptr->time_to_eat);
 	pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 1]);
 	printf("%ld   philo %d is stop eating\n", ft_print_time(), philo->id);
-
 }
 
 void	*ft_loop(t_philo *philo)
@@ -39,11 +38,10 @@ void	*ft_loop(t_philo *philo)
 	return (NULL);
 }
 
-
 int	main(int argc, char **argv)
 {
-	t_data			data;
-	t_philo 		*philo;
+	t_data		data;
+	t_philo		*philo;
 
 	if (!ft_fill_data_struct(argc, argv, &data))
 		return (0);
@@ -51,7 +49,7 @@ int	main(int argc, char **argv)
 	data.philo_ptr = philo;
 	if (!philo)
 		return (0);
-	if (!ft_init_thread(&data, philo))
+	if (ft_init_thread(&data, philo))
 		return (0);
 	free(philo);
 }
