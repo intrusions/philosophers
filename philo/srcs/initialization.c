@@ -12,28 +12,6 @@
 
 #include "philosophers.h"
 
-t_bool	ft_check_arg(int argc, char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (!(argv[i][j] >= '0' && argv[i][j] <= '9')) {
-				printf("petit test\n");
-				return (0);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
 t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data)
 {
 	if (!ft_check_arg(argc, argv))
@@ -53,5 +31,49 @@ t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data)
 	}
 	else
 		data->number_of_times_each_philosophers_must_eat = -1;
+	if (pthread_mutex_init(&data->mutex, NULL))
+		return (0);
+	data->fork = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
+	if(!data->fork)
+		return (0);
 	return (1);
+}
+
+t_bool	ft_init_thread(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		if (pthread_create(&philo[i].philo_thread, NULL, (void *)&ft_loop, philo + i))
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		if (pthread_join(philo[i].philo_thread, NULL))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+t_philo	*ft_fill_philo(t_data *data)
+{
+	int		i;
+	t_philo *philo;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * (data->number_of_philosophers));
+	if (!philo)
+		return (0);
+	while (i < data->number_of_philosophers)
+	{
+		philo[i].data_ptr = data;
+		philo[i].id = i + 1;
+		i++;
+	}
+	return (philo);
 }

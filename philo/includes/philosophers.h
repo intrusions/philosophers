@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/06 23:17:55 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/07 03:24:19 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,22 @@ typedef int t_bool;
 
 typedef struct s_data
 {
-	int	number_of_philosophers;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_each_philosophers_must_eat;
+	struct s_philo	*philo_ptr;
+	int				number_of_philosophers;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_of_times_each_philosophers_must_eat;
+	pthread_mutex_t *fork;
+	pthread_mutex_t mutex;
 }	t_data;
 
 typedef struct s_philo
 {
-	pthread_t	philo_thread;
-	int			id;
-	int			eat;
-	int			think;
-	int			sleep;
-	int			last_eat;
+	struct s_data	*data_ptr;
+	pthread_t		philo_thread;
+	int				id;
+	int				last_eat;
 }	t_philo;
 
 // ====================================================================================== //
@@ -56,10 +57,20 @@ typedef struct s_philo
 
 // Check if all parameters are valid
 t_bool	ft_check_arg(int argc, char **argv);
-// Fill the global structure with input value
+// Fill the global structure with input value, with one array of mutex, one per philo
 t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data);
-// Creat a thread per philo, with ft_routine in function, and mutex in parameters
-t_bool	ft_init_thread(t_data *data, t_philo *philo, pthread_mutex_t *mutex);
+// Creat an array of t_philo structure, one index per philo, with informations about eatch philo inside
+t_philo	*ft_fill_philo(t_data *data);
+// Creat a thread per philo, with ft_loop in function, and mutex in parameters
+t_bool	ft_init_thread(t_data *data, t_philo *philo);
+
+
+// ====================================================================================== //
+//                                     About routine                                      //
+// ====================================================================================== //
+
+// Principal function about routine of philosophers
+void	*ft_loop(t_philo *philo);
 
 // ====================================================================================== //
 //                                         Utils                                          //

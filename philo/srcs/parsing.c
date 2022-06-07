@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.c                                     :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/07 03:27:42 by jucheval         ###   ########.fr       */
+/*   Created: 2022/06/07 00:32:53 by jucheval          #+#    #+#             */
+/*   Updated: 2022/06/07 00:33:10 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*ft_loop(t_philo *philo)
+t_bool	ft_check_arg(int argc, char **argv)
 {
-	pthread_mutex_lock(&philo->data_ptr->mutex);
-	printf("philo->id = %d\n", philo->id);
-	pthread_mutex_unlock(&philo->data_ptr->mutex);
-	return (NULL);
-}
+	int	i;
+	int	j;
 
-
-int	main(int argc, char **argv)
-{
-	t_data			data;
-	t_philo 		*philo;
-
-	if (!ft_fill_global_struct(argc, argv, &data))
+	i = 1;
+	if (!(argc == 5 || argc == 6))
 		return (0);
-	philo = ft_fill_philo(&data);
-	if (!philo)
-		return (0);
-	if (!ft_init_thread(&data, philo))
-		return (0);
-	free(philo);
+	while (i < argc)
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
