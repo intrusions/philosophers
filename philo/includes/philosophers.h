@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/07 03:24:19 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/07 03:49:13 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct s_data
 typedef struct s_philo
 {
 	struct s_data	*data_ptr;
-	pthread_t		philo_thread;
 	int				id;
 	int				last_eat;
+	pthread_t		philo_thread;
 }	t_philo;
 
 // ====================================================================================== //
@@ -58,9 +58,9 @@ typedef struct s_philo
 // Check if all parameters are valid
 t_bool	ft_check_arg(int argc, char **argv);
 // Fill the global structure with input value, with one array of mutex, one per philo
-t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data);
+t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data);
 // Creat an array of t_philo structure, one index per philo, with informations about eatch philo inside
-t_philo	*ft_fill_philo(t_data *data);
+t_philo	*ft_fill_philo_struct(t_data *data);
 // Creat a thread per philo, with ft_loop in function, and mutex in parameters
 t_bool	ft_init_thread(t_data *data, t_philo *philo);
 

@@ -12,7 +12,7 @@
 
 #include "philosophers.h"
 
-t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data)
+t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 {
 	if (!ft_check_arg(argc, argv))
 		return (0);
@@ -39,6 +39,24 @@ t_bool	ft_fill_global_struct(int argc, char **argv, t_data *data)
 	return (1);
 }
 
+t_philo	*ft_fill_philo_struct(t_data *data)
+{
+	int		i;
+	t_philo *philo;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * (data->number_of_philosophers));
+	if (!philo)
+		return (0);
+	while (i < data->number_of_philosophers)
+	{
+		philo[i].data_ptr = data;
+		philo[i].id = i + 1;
+		i++;
+	}
+	return (philo);
+}
+
 t_bool	ft_init_thread(t_data *data, t_philo *philo)
 {
 	int	i;
@@ -58,22 +76,4 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 		i++;
 	}
 	return (1);
-}
-
-t_philo	*ft_fill_philo(t_data *data)
-{
-	int		i;
-	t_philo *philo;
-
-	i = 0;
-	philo = malloc(sizeof(t_philo) * (data->number_of_philosophers));
-	if (!philo)
-		return (0);
-	while (i < data->number_of_philosophers)
-	{
-		philo[i].data_ptr = data;
-		philo[i].id = i + 1;
-		i++;
-	}
-	return (philo);
 }
