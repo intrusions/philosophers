@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/06 19:00:35 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/08 00:48:53 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,15 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (neg * r);
+}
+
+long	ft_get_time(void)
+{
+	struct timeval	tv;
+	long			time;
+
+	gettimeofday(&tv, (void *)0);
+	time = tv.tv_sec * 1000;
+	time += tv.tv_usec / 1000;
+	return (time);
 }
