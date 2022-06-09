@@ -36,7 +36,7 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->number_of_philosophers);
 	if (!data->fork)
 		return (0);
-	if (!ft_init_fork(data))
+	if (!ft_init_fork_and_check_die(data))
 		return (0);
 	return (1);
 }
@@ -56,12 +56,13 @@ t_philo	*ft_fill_philo_struct(t_data *data)
 		philo[i].id = i + 1;
 		philo[i].die = 0;
 		philo[i].last_eat = 0;
+		philo[i].nb_meal = data->number_of_times_each_philosophers_must_eat;
 		i++;
 	}
 	return (philo);
 }
 
-t_bool	ft_init_fork(t_data *data)
+t_bool	ft_init_fork_and_check_die(t_data *data)
 {
 	int	i;
 
@@ -72,6 +73,8 @@ t_bool	ft_init_fork(t_data *data)
 			return (0);
 		i++;
 	}
+	if (pthread_mutex_init(&data->check_die, NULL))
+		return (0);
 	return (1);
 }
 

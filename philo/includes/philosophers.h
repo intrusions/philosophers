@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/08 00:56:22 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/09 04:51:31 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ typedef struct s_data
 	int				number_of_times_each_philosophers_must_eat;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	check_die;
 }	t_data;
 
 typedef struct s_philo
 {
 	struct s_data	*data_ptr;
 	int				id;
+	int				nb_meal;
 	long			last_eat;
 	int				die;
 	pthread_t		philo_thread;
@@ -60,7 +62,7 @@ t_bool	ft_check_arg(int argc, char **argv);
 // Fill the data structure with input value, and tcheck if value are valid
 t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data);
 // Init a mutex array called fork, in data strucutre
-t_bool	ft_init_fork(t_data *data);
+t_bool	ft_init_fork_and_check_die(t_data *data);
 // Creat an array of t_philo, one per philo, with info about eatch philo inside
 t_philo	*ft_fill_philo_struct(t_data *data);
 // Creat a thread per philo, with ft_loop in function, and t_philo in params
