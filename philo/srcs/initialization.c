@@ -56,7 +56,7 @@ t_philo	*ft_fill_philo_struct(t_data *data)
 		philo[i].id = i + 1;
 		philo[i].die = 0;
 		philo[i].last_eat = 0;
-		philo[i].nb_meal = data->number_of_times_each_philosophers_must_eat;
+		philo[i].nb_meal = 0;
 		i++;
 	}
 	return (philo);

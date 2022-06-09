@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/09 04:51:31 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:50:46 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+
+// ========================================================================= //
+//                                   Library                                 //
+// ========================================================================= //
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -20,6 +24,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stddef.h>
+
 // ========================================================================= //
 //                                   Typedef                                 //
 // ========================================================================= //
@@ -74,6 +79,12 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo);
 
 // Principal function about routine of philosophers
 void	*ft_loop(t_philo *philo);
+// Check if all the philosophers have not eaten more times than the max
+t_bool	ft_check_eat(t_philo *philo);
+// Function to eat
+void	ft_eat(t_philo *philo);
+// Function to sleep
+void	ft_sleep(t_philo *philo, int time_to_sleep);
 
 // ========================================================================= //
 //                                    Utils                                  //

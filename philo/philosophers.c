@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/09 05:17:12 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:45:08 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_sleep(t_philo *philo, int time)
+void	ft_sleep(t_philo *philo, int time_to_sleep)
 {
 	printf("%ld - %d is sleeping\n", ft_get_time(), philo->id);
-	usleep(time);
+	usleep(time_to_sleep);
 }
 
 void	ft_eat(t_philo *philo)
@@ -27,22 +27,19 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 1]);
 }
 
-// t_bool	ft_check_eat(t_philo *philo)
-// {
-// 	int	i;
+t_bool	ft_check_eat(t_philo *philo)
+{
+	int	i;
 
-// 	i = 0;
-// 	if (philo->data_ptr->number_of_philosophers != 1)
-// 	{
-// 		while (i < philo->data_ptr->number_of_philosophers)
-// 		{
-// 			if (philo[i].nb_meal < philo->data_ptr->number_of_times_each_philosophers_must_eat)
-// 				return (0);
-// 			i++;
-// 		}
-// 		return (1);
-// 	}
-// }
+	i = 0;
+	while (i < philo->data_ptr->number_of_philosophers)
+	{
+		if (philo[i].nb_meal < philo->data_ptr->number_of_times_each_philosophers_must_eat)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	*ft_loop(t_philo *philo)
 {
@@ -53,19 +50,19 @@ void	*ft_loop(t_philo *philo)
 		printf("%ld - %d est mort\n", ft_get_time(), philo->id);
 		return (0);
 	}
-	if (philo->data_ptr->number_of_philosophers % 2)									// Si mon nombre de philo est impaire
+	if (philo->data_ptr->number_of_philosophers % 2)									// Si le nombre de philo est impaire
 	{
-		if (philo->id == philo->data_ptr->number_of_philosophers)						// Si mon philo est le dernier des impaire
+		if (philo->id == philo->data_ptr->number_of_philosophers)						// Si l'id du philo est le dernier des impaire
 			ft_sleep(philo, philo->data_ptr->time_to_eat * 2);
-		if (philo->id % 2)																// Si mon philo est inmpaire et que le nombre de philo est impaire
+		if (philo->id % 2)																// Si l'id du philo est inmpaire et que le nombre de philo est impaire
 			ft_sleep(philo, philo->data_ptr->time_to_eat);
 	}
-	else if (philo->id % 2)																// Si mon philo est impaire dans un groupe de philo paire
+	else if (!(philo->data_ptr->number_of_philosophers % 2) && (philo->id % 2))			// Si l'id du philo est impaire dans un groupe de philo paire
 		ft_sleep(philo, philo->data_ptr->time_to_eat);
-	// while (!philo->die && !ft_check_eat(philo))
-	// {
-		
-	// }
+	while (!philo->die && !ft_check_eat(philo - (philo->id - 1)))
+	{
+		printf("coucou\n");
+	}
 	return (0);
 }
 
