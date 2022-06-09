@@ -2,6 +2,7 @@ SRCS		=	philosophers.c				\
 				srcs/utils.c				\
 				srcs/initialization.c		\
 				srcs/parsing.c				\
+				srcs/action.c				\
 
 OBJS		=	$(SRCS:.c=.o)
 
