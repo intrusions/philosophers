@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 03:32:46 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/11 03:57:29 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*ft_loop(t_philo *philo)
 		ft_write(philo, LOCK_FORK);
 		ft_write(philo, DIE);
 		usleep(philo->data_ptr->time_to_die * 1000);
+		philo->data_ptr->die = 1;
 		return (0);
 	}
 	if (philo->data_ptr->number_of_philosophers % 2)									// Si le nombre de philo est impaire
@@ -41,9 +42,7 @@ void	*ft_loop(t_philo *philo)
 	else if (!(philo->data_ptr->number_of_philosophers % 2) && (philo->id % 2))			// Si l'id du philo est impaire dans un groupe de philo paire
 		ft_sleep(philo, philo->data_ptr->time_to_eat);
 	while (!philo->data_ptr->die && !ft_check_eat(philo - (philo->id - 1)))
-	{
 		ft_eat_and_more(philo);															// Premier tour, les paire vont manger
-	}
 	return (0);
 }
 
