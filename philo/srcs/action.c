@@ -47,7 +47,7 @@ void	ft_sleep(t_philo *philo, int time_to_sleep)
 void	ft_eat(t_philo *philo)
 {
 	ft_lock_fork(philo);
-	philo->last_eat = ft_get_time() - philo->data_ptr->time * 1000;
+	philo->last_eat = ft_get_time() - philo->data_ptr->time;
 	philo->nb_meal++;
 	ft_write(philo, EAT);
 	usleep(philo->data_ptr->time_to_eat * 1000);
@@ -58,12 +58,14 @@ void	ft_death(t_data *data, t_philo *philo)
 {
 	int	i;
 
+	// pthread_mutex_lock(&philo->data_ptr->check_die);
+	usleep(100);
 	while (!data->die)
 	{
 		i = 0;
 		while (i < data->number_of_philosophers)
 		{
-			if ((data->time - ft_get_time() - philo[i].last_eat)
+			if ((ft_get_time() - data->time - philo[i].last_eat)
 				>= data->time_to_die)
 			{
 				data->die = philo->id;
@@ -73,4 +75,5 @@ void	ft_death(t_data *data, t_philo *philo)
 			i++;
 		}
 	}
+	// pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
