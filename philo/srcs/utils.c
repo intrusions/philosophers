@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/09 18:52:52 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/11 03:42:38 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_bool	ft_check_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
+	if (philo->data_ptr->number_of_times_each_philosophers_must_eat == -1)
+		return (0);
 	while (i < philo->data_ptr->number_of_philosophers)
 	{
 		if (philo[i].nb_meal < philo->data_ptr->number_of_times_each_philosophers_must_eat)

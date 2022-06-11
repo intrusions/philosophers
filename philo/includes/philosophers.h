@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/09 18:50:46 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/11 03:31:22 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@
 # include <stddef.h>
 
 // ========================================================================= //
+//                                   Define                                  //
+// ========================================================================= //
+
+# define SLEEP 1
+# define EAT 2
+# define THINK 3
+# define LOCK_FORK 4
+# define UNLOCK_FORK 5
+# define DIE 6
+
+// ========================================================================= //
 //                                   Typedef                                 //
 // ========================================================================= //
 
@@ -43,6 +54,8 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				number_of_times_each_philosophers_must_eat;
+	long			time;
+	int				die;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	check_die;
@@ -54,7 +67,6 @@ typedef struct s_philo
 	int				id;
 	int				nb_meal;
 	long			last_eat;
-	int				die;
 	pthread_t		philo_thread;
 }	t_philo;
 
@@ -85,6 +97,16 @@ t_bool	ft_check_eat(t_philo *philo);
 void	ft_eat(t_philo *philo);
 // Function to sleep
 void	ft_sleep(t_philo *philo, int time_to_sleep);
+// Function to think
+void	ft_think(t_philo *data);
+//  Function to tcheck if a philo diying
+void	ft_death(t_data *data, t_philo *philo);
+// Function to print message
+void	ft_write(t_philo *philo, int what_message);
+// Function to lock fork
+void	ft_lock_fork(t_philo *philo);
+// Function ton unlock fork
+void	ft_unlock_fork(t_philo *philo);
 
 // ========================================================================= //
 //                                    Utils                                  //
