@@ -35,31 +35,37 @@ void	ft_write(t_philo *philo, int what_message)
 
 void	ft_think(t_philo *philo)
 {
-	ft_write(philo, THINK);
+	if (!philo->data_ptr->die)
+		ft_write(philo, THINK);
+
 }
 
 void	ft_sleep(t_philo *philo, int time_to_sleep)
 {
-	ft_write(philo, SLEEP);
-	usleep(time_to_sleep * 1000);
+	if (!philo->data_ptr->die)
+	{
+		ft_write(philo, SLEEP);
+		usleep(time_to_sleep * 1000);
+	}
 }
 
 void	ft_eat(t_philo *philo)
 {
-	ft_lock_fork(philo);
-	philo->last_eat = ft_get_time() - philo->data_ptr->time;
-	philo->nb_meal++;
-	ft_write(philo, EAT);
-	usleep(philo->data_ptr->time_to_eat * 1000);
-	ft_unlock_fork(philo);
+	if (!philo->data_ptr->die)
+	{
+		ft_lock_fork(philo);
+		philo->last_eat = ft_get_time() - philo->data_ptr->time;
+		philo->nb_meal++;
+		ft_write(philo, EAT);
+		usleep(philo->data_ptr->time_to_eat * 1000);
+		ft_unlock_fork(philo);
+	}
 }
 
 void	ft_death(t_data *data, t_philo *philo)
 {
 	int	i;
 
-	// pthread_mutex_lock(&philo->data_ptr->check_die);
-	usleep(100);
 	while (!data->die)
 	{
 		i = 0;
@@ -75,5 +81,4 @@ void	ft_death(t_data *data, t_philo *philo)
 			i++;
 		}
 	}
-	// pthread_mutex_unlock(&philo->data_ptr->check_die);
 }

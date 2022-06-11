@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 19:59:11 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/11 22:04:55 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void	ft_eat_and_more(t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->data_ptr->check_die);
 	if (!philo->data_ptr->die)
 		ft_eat(philo);
 	if (!philo->data_ptr->die)
 		ft_sleep(philo, philo->data_ptr->time_to_sleep);
 	if (!philo->data_ptr->die)
 		ft_think(philo);
-	// pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	*ft_loop(t_philo *philo)

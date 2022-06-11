@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 03:38:23 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 03:41:12 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/11 22:14:32 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_lock_fork(t_philo *philo)
 	else
 	{
 		pthread_mutex_lock(&philo->data_ptr->fork[philo->id - 1]);
-		pthread_mutex_lock(&philo->data_ptr->fork[philo->id]);
+		pthread_mutex_lock(&philo->data_ptr->fork[philo->id - 2]);
 		ft_write(philo, LOCK_FORK);
 		ft_write(philo, LOCK_FORK);
 	}
@@ -40,6 +40,6 @@ void	ft_unlock_fork(t_philo *philo)
 	else
 	{
 		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 1]);
-		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id]);
+		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 2]);
 	}
 }

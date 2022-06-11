@@ -92,6 +92,7 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 		i++;
 	}
 	i = 0;
+	usleep(100);
 	ft_death(data, philo);
 	while (i < data->number_of_philosophers)
 	{
