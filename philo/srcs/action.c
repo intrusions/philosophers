@@ -51,6 +51,7 @@ void	ft_sleep(t_philo *philo, int time_to_sleep)
 
 void	ft_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data_ptr->check_die);
 	if (!philo->data_ptr->die)
 	{
 		ft_lock_fork(philo);
@@ -60,6 +61,7 @@ void	ft_eat(t_philo *philo)
 		usleep(philo->data_ptr->time_to_eat * 1000);
 		ft_unlock_fork(philo);
 	}
+	pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	ft_death(t_data *data, t_philo *philo)

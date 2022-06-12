@@ -22,7 +22,8 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->time = ft_get_time();
 	data->die = 0;
-	if (data->number_of_philosophers <= 0 || data->time_to_die <= 0
+	if ((data->number_of_philosophers <= 0 || data->number_of_philosophers > 120)
+		|| data->time_to_die <= 0
 		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0)
 		return (0);
 	if (argc == 6)
@@ -100,5 +101,7 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 			return (0);
 		i++;
 	}
+	ft_destroy(data);
+	free(philo);
 	return (1);
 }

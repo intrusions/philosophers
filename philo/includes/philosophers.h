@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 03:31:22 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 02:19:59 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@
 //                                   Define                                  //
 // ========================================================================= //
 
+# define INT_MAX 2147483647
 # define SLEEP 1
 # define EAT 2
 # define THINK 3
 # define LOCK_FORK 4
-# define UNLOCK_FORK 5
-# define DIE 6
+# define DIE 5
 
 // ========================================================================= //
 //                                   Typedef                                 //
@@ -116,5 +116,7 @@ void	ft_unlock_fork(t_philo *philo);
 int		ft_atoi(const char *str);
 // Get time in ms
 long	ft_get_time(void);
+// Function to destroy and free all memory allocated by mutex
+void	ft_destroy(t_data *data);
 
 #endif

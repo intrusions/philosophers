@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 22:04:55 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/11 23:25:32 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,4 @@ int	main(int argc, char **argv)
 		return (0);
 	if (ft_init_thread(&data, philo))
 		return (0);
-	free(philo);
 }

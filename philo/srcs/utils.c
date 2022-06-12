@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 03:42:38 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 02:20:02 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (r * neg > 2147483647)
-			return (-1);
-		else if (r * neg < -2147483648)
+		if (r * neg > INT_MAX)
 			return (0);
 		r = r * 10 + (str[i] - 48);
 		i++;
@@ -66,4 +64,20 @@ t_bool	ft_check_eat(t_philo *philo)
 		i++;
 	}
 	return (1);
+}
+
+void	ft_destroy(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		pthread_mutex_destroy(&data->fork[i]);
+		i++;
+	}
+	i = 0;
+	free(data->fork);
+	pthread_mutex_destroy(&data->mutex);
+	pthread_mutex_destroy(&data->check_die);
 }
