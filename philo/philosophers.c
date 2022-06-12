@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/11 23:25:32 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 02:34:55 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,32 @@ void	ft_eat_and_more(t_philo *philo)
 	if (!philo->data_ptr->die)
 		ft_eat(philo);
 	if (!philo->data_ptr->die)
-		ft_sleep(philo, philo->data_ptr->time_to_sleep);
+		ft_sleep(philo, philo->data_ptr->tts);
 	if (!philo->data_ptr->die)
 		ft_think(philo);
 }
 
 void	*ft_loop(t_philo *philo)
 {
-	if (philo->data_ptr->number_of_philosophers == 1)									// Si le philo est tout seul
+	if (philo->data_ptr->nb_philo == 1)
 	{
 		ft_write(philo, LOCK_FORK);
 		ft_write(philo, DIE);
-		usleep(philo->data_ptr->time_to_die * 1000);
+		usleep(philo->data_ptr->ttd * 1000);
 		philo->data_ptr->die = 1;
 		return (0);
 	}
-	if (philo->data_ptr->number_of_philosophers % 2)									// Si le nombre de philo est impaire
+	if (philo->data_ptr->nb_philo % 2)
 	{
-		if (philo->id == philo->data_ptr->number_of_philosophers)						// Si l'id du philo est le dernier des impaire
-			usleep((philo->data_ptr->time_to_eat * 2) * 1000);
-		if (philo->id % 2)																// Si l'id du philo est inmpaire et que le nombre de philo est impaire
-			usleep(philo->data_ptr->time_to_eat * 1000);
+		if (philo->id == philo->data_ptr->nb_philo)
+			usleep((philo->data_ptr->tte * 2) * 1000);
+		if (philo->id % 2)
+			usleep(philo->data_ptr->tte * 1000);
 	}
-	else if (!(philo->data_ptr->number_of_philosophers % 2) && (philo->id % 2))			// Si l'id du philo est impaire dans un groupe de philo paire
-		ft_sleep(philo, philo->data_ptr->time_to_eat);
+	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
+		ft_sleep(philo, philo->data_ptr->tte);
 	while (!philo->data_ptr->die && !ft_check_eat(philo - (philo->id - 1)))
-		ft_eat_and_more(philo);															// Premier tour, les paire vont manger
+		ft_eat_and_more(philo);
 	return (0);
 }
 

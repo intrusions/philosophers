@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/12 02:20:02 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 02:33:05 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ t_bool	ft_check_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
-	if (philo->data_ptr->number_of_times_each_philosophers_must_eat == -1)
+	if (philo->data_ptr->max_eat == -1)
 		return (0);
-	while (i < philo->data_ptr->number_of_philosophers)
+	while (i < philo->data_ptr->nb_philo)
 	{
-		if (philo[i].nb_meal < philo->data_ptr->number_of_times_each_philosophers_must_eat)
+		if (philo[i].nb_meal < philo->data_ptr->max_eat)
 			return (0);
 		i++;
 	}
@@ -71,7 +71,7 @@ void	ft_destroy(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->number_of_philosophers)
+	while (i < data->nb_philo)
 	{
 		pthread_mutex_destroy(&data->fork[i]);
 		i++;

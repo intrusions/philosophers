@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/12 02:19:59 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 02:32:05 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ typedef int	t_bool;
 typedef struct s_data
 {
 	struct s_philo	*philo_ptr;
-	int				number_of_philosophers;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				number_of_times_each_philosophers_must_eat;
+	int				nb_philo;
+	int				ttd;
+	int				tte;
+	int				tts;
+	int				max_eat;
 	long			time;
 	int				die;
 	pthread_mutex_t	*fork;
@@ -96,7 +96,7 @@ t_bool	ft_check_eat(t_philo *philo);
 // Function to eat
 void	ft_eat(t_philo *philo);
 // Function to sleep
-void	ft_sleep(t_philo *philo, int time_to_sleep);
+void	ft_sleep(t_philo *philo, int tts);
 // Function to think
 void	ft_think(t_philo *data);
 //  Function to tcheck if a philo diying
@@ -118,5 +118,7 @@ int		ft_atoi(const char *str);
 long	ft_get_time(void);
 // Function to destroy and free all memory allocated by mutex
 void	ft_destroy(t_data *data);
+// Function to theck if an input value is smaller than or equal to 0
+t_bool	ft_check_input_value(int argc, char **argv, t_data *data);
 
 #endif
