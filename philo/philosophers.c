@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/12 02:34:55 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/12 04:45:12 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	*ft_loop(t_philo *philo)
 	{
 		if (philo->id == philo->data_ptr->nb_philo)
 			usleep((philo->data_ptr->tte * 2) * 1000);
-		if (philo->id % 2)
+		else if (philo->id % 2)
 			usleep(philo->data_ptr->tte * 1000);
 	}
 	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
-		ft_sleep(philo, philo->data_ptr->tte);
+		usleep(philo->data_ptr->tte);
 	while (!philo->data_ptr->die && !ft_check_eat(philo - (philo->id - 1)))
 		ft_eat_and_more(philo);
 	return (0);

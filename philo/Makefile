@@ -11,7 +11,7 @@ CC			=	gcc
 
 RM			=	rm -f
 
-CFLAGS		= 	-Wall -Wextra -Werror -g3
+CFLAGS		= 	-Wall -Wextra -Werror -g3 #-fsanitize=thread
 
 CPPFLAGS	=	-I./includes
 
