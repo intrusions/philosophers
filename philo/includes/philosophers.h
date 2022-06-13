@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/12 04:59:53 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/13 05:04:55 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_data
 	int				die;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	check_eat;
 	pthread_mutex_t	check_die;
 }	t_data;
 

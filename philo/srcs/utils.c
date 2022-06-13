@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/12 02:33:05 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/13 05:13:18 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,22 @@ t_bool	ft_check_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&philo->data_ptr->check_eat);
 	if (philo->data_ptr->max_eat == -1)
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_eat);
 		return (0);
+	}
 	while (i < philo->data_ptr->nb_philo)
 	{
 		if (philo[i].nb_meal < philo->data_ptr->max_eat)
+		{
 			return (0);
+			pthread_mutex_unlock(&philo->data_ptr->check_eat);
+		}
 		i++;
 	}
+	pthread_mutex_unlock(&philo->data_ptr->check_eat);
 	return (1);
 }
 
@@ -80,4 +88,5 @@ void	ft_destroy(t_data *data)
 	free(data->fork);
 	pthread_mutex_destroy(&data->mutex);
 	pthread_mutex_destroy(&data->check_die);
+	pthread_mutex_destroy(&data->check_eat);
 }
