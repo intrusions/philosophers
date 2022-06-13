@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/13 08:22:59 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:47:51 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ void	*ft_loop(t_philo *philo)
 	if (philo->data_ptr->nb_philo == 1)
 	{
 		ft_write(philo, LOCK_FORK);
+		pthread_mutex_lock(&philo->data_ptr->check_die);
+		philo->data_ptr->die = 1;
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_write(philo, DIE);
 		usleep(philo->data_ptr->ttd * 1000);
-		philo->data_ptr->die = 1;
 		return (0);
 	}
 	if (philo->data_ptr->nb_philo % 2)
@@ -81,4 +83,6 @@ int	main(int argc, char **argv)
 		return (0);
 	if (ft_init_thread(&data, philo))
 		return (0);
+	ft_destroy(&data);
+	free(philo);
 }

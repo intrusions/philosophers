@@ -86,13 +86,12 @@ void	ft_death(t_data *data, t_philo *philo)
 	{
 		while (!data->die)
 		{
-			i = 0;
 			pthread_mutex_unlock(&philo->data_ptr->check_die);
+			i = 0;
 			while (i < data->nb_philo)
 			{
 				pthread_mutex_lock(&philo->data_ptr->check_eat);
-				if ((ft_get_time() - data->time - philo[i].last_eat)
-					>= data->ttd)
+				if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
 				{
 					pthread_mutex_unlock(&philo->data_ptr->check_eat);
 					pthread_mutex_lock(&philo->data_ptr->check_die);
