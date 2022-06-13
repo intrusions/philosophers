@@ -86,8 +86,8 @@ void	ft_death(t_data *data, t_philo *philo)
 	{
 		while (!data->die)
 		{
-			pthread_mutex_unlock(&philo->data_ptr->check_die);
 			i = 0;
+			pthread_mutex_unlock(&philo->data_ptr->check_die);
 			while (i < data->nb_philo)
 			{
 				pthread_mutex_lock(&philo->data_ptr->check_eat);

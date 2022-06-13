@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/13 05:13:18 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/13 05:21:04 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_bool	ft_check_eat(t_philo *philo)
 	{
 		if (philo[i].nb_meal < philo->data_ptr->max_eat)
 		{
-			return (0);
 			pthread_mutex_unlock(&philo->data_ptr->check_eat);
+			return (0);
 		}
 		i++;
 	}

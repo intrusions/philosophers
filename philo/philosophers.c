@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/13 05:17:52 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/13 08:22:59 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,30 @@
 
 void	ft_eat_and_more(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data_ptr->check_die);
 	if (!philo->data_ptr->die)
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_eat(philo);
+	}
+	else
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	pthread_mutex_lock(&philo->data_ptr->check_die);
 	if (!philo->data_ptr->die)
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_sleep(philo, philo->data_ptr->tts);
+	}
+	else
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	pthread_mutex_lock(&philo->data_ptr->check_die);
 	if (!philo->data_ptr->die)
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_think(philo);
+	}
+	else
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	*ft_loop(t_philo *philo)
@@ -41,8 +59,12 @@ void	*ft_loop(t_philo *philo)
 	}
 	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
 		usleep(philo->data_ptr->tte);
+	pthread_mutex_lock(&philo->data_ptr->check_die);
 	while (!philo->data_ptr->die && !ft_check_eat(philo - (philo->id - 1)))
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_eat_and_more(philo);
+	}
 	return (0);
 }
 
