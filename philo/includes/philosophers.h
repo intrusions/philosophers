@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/14 09:21:16 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/14 09:38:20 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex;
 	pthread_mutex_t	check_time_eat;
+	pthread_mutex_t	check_max_eat;
 	pthread_mutex_t	check_die;
 }	t_data;
 

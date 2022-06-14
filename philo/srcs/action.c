@@ -35,44 +35,32 @@ void	ft_write(t_philo *philo, int what_message)
 
 void	ft_think(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
-	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	if (!ft_check_die(philo))
 		ft_write(philo, THINK);
-	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	ft_sleep(t_philo *philo, int tts)
 {
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
+	if (!ft_check_die(philo))
 	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_write(philo, SLEEP);
 		usleep(tts * 1000);
 	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	ft_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
+	if (!ft_check_die(philo))
 	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		ft_lock_fork(philo);
+		ft_write(philo, EAT);
 		pthread_mutex_lock(&philo->data_ptr->check_time_eat);
 		philo->last_eat = ft_get_time() - philo->data_ptr->time;
-		philo->nb_meal++;
 		pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-		ft_write(philo, EAT);
+		pthread_mutex_lock(&philo->data_ptr->check_max_eat);
+		philo->nb_meal++;
+		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 		usleep(philo->data_ptr->tte * 1000);
 		ft_unlock_fork(philo);
 	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 }

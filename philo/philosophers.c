@@ -6,7 +6,7 @@
 /*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/14 09:21:23 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/14 10:16:42 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*ft_loop(t_philo *philo)
 	if (philo->data_ptr->nb_philo % 2)
 	{
 		if (philo->id == philo->data_ptr->nb_philo)
-			usleep((philo->data_ptr->tte * 2) * 1000);
+			usleep((philo->data_ptr->tte * 2) * 800);
 		else if (philo->id % 2)
 			usleep(philo->data_ptr->tte * 1000);
 	}
@@ -52,27 +52,24 @@ void	ft_death(t_data *data, t_philo *philo)
 {
 	int	i;
 
-	if (!ft_check_die(philo))
+	while (!ft_check_die(philo))
 	{
-		while (!ft_check_die(philo))
+		i = 0;
+		while (i < data->nb_philo)
 		{
-			i = 0;
-			while (i < data->nb_philo)
+			pthread_mutex_lock(&philo->data_ptr->check_time_eat);
+			if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
 			{
-				pthread_mutex_lock(&philo->data_ptr->check_time_eat);
-				if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
-				{
-					pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-					pthread_mutex_lock(&philo->data_ptr->check_die);
-					data->die = philo->id;
-					pthread_mutex_unlock(&philo->data_ptr->check_die);
-					ft_write(philo + i, DIE);
-					return ;
-				}
-				else
-					pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-				i++;
+				pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
+				pthread_mutex_lock(&philo->data_ptr->check_die);
+				data->die = philo->id;
+				pthread_mutex_unlock(&philo->data_ptr->check_die);
+				ft_write(philo + i, DIE);
+				return ;
 			}
+			else
+				pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
+			i++;
 		}
 	}
 }
