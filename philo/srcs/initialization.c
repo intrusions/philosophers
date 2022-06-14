@@ -83,7 +83,9 @@ t_bool	ft_init_fork_and_check_die(t_data *data)
 	}
 	if (pthread_mutex_init(&data->check_die, NULL))
 		return (0);
-	if (pthread_mutex_init(&data->check_eat, NULL))
+	if (pthread_mutex_init(&data->check_max_eat, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->check_last_eat, NULL))
 		return (0);
 	return (1);
 }
@@ -103,12 +105,6 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 	i = 0;
 	usleep(100);
 	ft_death(data, philo);
-	while (i < data->nb_philo)
-	{
-		if (pthread_join(philo[i].philo_thread, NULL))
-			return (0);
-		i++;
-	}
 	ft_destroy(data);
 	free(philo);
 	return (1);

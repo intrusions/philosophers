@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/14 14:55:20 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:23:21 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,32 @@ long	ft_get_time(void)
 	return (time);
 }
 
-t_bool	ft_check_eat(t_philo *philo)
+t_bool	ft_check_max_eat(t_philo *philo)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
-	pthread_mutex_lock(&philo->data_ptr->check_eat);
+	ret = 0;
+	pthread_mutex_lock(&philo->data_ptr->check_max_eat);
 	if (philo->data_ptr->max_eat == -1)
 	{
-		pthread_mutex_unlock(&philo->data_ptr->check_eat);
+		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 		return (0);
 	}
+	else
+		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 	while (i < philo->data_ptr->nb_philo)
 	{
-		if (philo[i].nb_meal < philo->data_ptr->max_eat)
-		{
-			pthread_mutex_unlock(&philo->data_ptr->check_eat);
-			return (0);
-		}
+		pthread_mutex_lock(&philo->data_ptr->check_max_eat);
+		if (philo[i].nb_meal >= philo->data_ptr->max_eat)
+			ret++;
+		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 		i++;
 	}
-	pthread_mutex_unlock(&philo->data_ptr->check_eat);
-	return (1);
+	if (ret == (philo->data_ptr->nb_philo - 1))
+		return (1);
+	return (0);
 }
 
 void	ft_destroy(t_data *data)
@@ -61,7 +65,8 @@ void	ft_destroy(t_data *data)
 	free(data->fork);
 	pthread_mutex_destroy(&data->mutex);
 	pthread_mutex_destroy(&data->check_die);
-	pthread_mutex_destroy(&data->check_eat);
+	pthread_mutex_destroy(&data->check_last_eat);
+	pthread_mutex_destroy(&data->check_max_eat);
 }
 
 t_bool	ft_check_die(t_philo *philo)
