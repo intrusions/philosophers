@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/14 10:16:42 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/14 14:33:19 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,41 +37,15 @@ void	*ft_loop(t_philo *philo)
 	if (philo->data_ptr->nb_philo % 2)
 	{
 		if (philo->id == philo->data_ptr->nb_philo)
-			usleep((philo->data_ptr->tte * 2) * 800);
+			usleep((philo->data_ptr->tte * 2) * 1000);
 		else if (philo->id % 2)
 			usleep(philo->data_ptr->tte * 1000);
 	}
 	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
 		usleep(philo->data_ptr->tte);
-	while (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
+	while (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
 		ft_eat_and_more(philo);
 	return (0);
-}
-
-void	ft_death(t_data *data, t_philo *philo)
-{
-	int	i;
-
-	while (!ft_check_die(philo))
-	{
-		i = 0;
-		while (i < data->nb_philo)
-		{
-			pthread_mutex_lock(&philo->data_ptr->check_time_eat);
-			if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
-			{
-				pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-				pthread_mutex_lock(&philo->data_ptr->check_die);
-				data->die = philo->id;
-				pthread_mutex_unlock(&philo->data_ptr->check_die);
-				ft_write(philo + i, DIE);
-				return ;
-			}
-			else
-				pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-			i++;
-		}
-	}
 }
 
 int	main(int argc, char **argv)

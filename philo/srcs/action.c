@@ -53,14 +53,38 @@ void	ft_eat(t_philo *philo)
 	if (!ft_check_die(philo))
 	{
 		ft_lock_fork(philo);
-		ft_write(philo, EAT);
-		pthread_mutex_lock(&philo->data_ptr->check_time_eat);
+		pthread_mutex_lock(&philo->data_ptr->check_eat);
 		philo->last_eat = ft_get_time() - philo->data_ptr->time;
-		pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
-		pthread_mutex_lock(&philo->data_ptr->check_max_eat);
 		philo->nb_meal++;
-		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
+		pthread_mutex_unlock(&philo->data_ptr->check_eat);
+		ft_write(philo, EAT);
 		usleep(philo->data_ptr->tte * 1000);
 		ft_unlock_fork(philo);
+	}
+}
+
+void	ft_death(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	while (!ft_check_die(philo))
+	{
+		i = 0;
+		while (i < data->nb_philo)
+		{
+			pthread_mutex_lock(&philo->data_ptr->check_eat);
+			if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
+			{
+				pthread_mutex_unlock(&philo->data_ptr->check_eat);
+				pthread_mutex_lock(&philo->data_ptr->check_die);
+				data->die = philo->id;
+				pthread_mutex_unlock(&philo->data_ptr->check_die);
+				ft_write(philo + i, DIE);
+				return ;
+			}
+			else
+				pthread_mutex_unlock(&philo->data_ptr->check_eat);
+			i++;
+		}	
 	}
 }

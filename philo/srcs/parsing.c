@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 00:32:53 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/07 00:33:10 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:55:25 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,31 @@ t_bool	ft_check_arg(int argc, char **argv)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_atoi(const char *str)
+{
+	size_t		i;
+	long long	r;
+	int			neg;
+
+	i = 0;
+	r = 0;
+	neg = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == ' '))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (r * neg > INT_MAX)
+			return (0);
+		r = r * 10 + (str[i] - 48);
+		i++;
+	}
+	return (neg * r);
 }
