@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/13 10:47:51 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/14 09:21:23 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,12 @@
 
 void	ft_eat_and_more(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
-	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	if (!ft_check_die(philo))
 		ft_eat(philo);
-	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
-	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	if (!ft_check_die(philo))
 		ft_sleep(philo, philo->data_ptr->tts);
-	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	if (!philo->data_ptr->die)
-	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	if (!ft_check_die(philo))
 		ft_think(philo);
-	}
-	else
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
 }
 
 void	*ft_loop(t_philo *philo)
@@ -61,13 +43,38 @@ void	*ft_loop(t_philo *philo)
 	}
 	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
 		usleep(philo->data_ptr->tte);
-	pthread_mutex_lock(&philo->data_ptr->check_die);
-	while (!philo->data_ptr->die && !ft_check_eat(philo - (philo->id - 1)))
-	{
-		pthread_mutex_unlock(&philo->data_ptr->check_die);
+	while (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		ft_eat_and_more(philo);
-	}
 	return (0);
+}
+
+void	ft_death(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	if (!ft_check_die(philo))
+	{
+		while (!ft_check_die(philo))
+		{
+			i = 0;
+			while (i < data->nb_philo)
+			{
+				pthread_mutex_lock(&philo->data_ptr->check_time_eat);
+				if ((ft_get_time() - data->time - philo[i].last_eat) >= data->ttd)
+				{
+					pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
+					pthread_mutex_lock(&philo->data_ptr->check_die);
+					data->die = philo->id;
+					pthread_mutex_unlock(&philo->data_ptr->check_die);
+					ft_write(philo + i, DIE);
+					return ;
+				}
+				else
+					pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
+				i++;
+			}
+		}
+	}
 }
 
 int	main(int argc, char **argv)

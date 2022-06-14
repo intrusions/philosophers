@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/13 10:34:39 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/14 09:21:53 by xel              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,43 @@ long	ft_get_time(void)
 	return (time);
 }
 
-t_bool	ft_check_eat(t_philo *philo)
+t_bool	ft_check_max_eat(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&philo->data_ptr->check_eat);
+	pthread_mutex_lock(&philo->data_ptr->check_time_eat);
 	if (philo->data_ptr->max_eat == -1)
 	{
-		pthread_mutex_unlock(&philo->data_ptr->check_eat);
+		pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
 		return (0);
 	}
 	while (i < philo->data_ptr->nb_philo)
 	{
 		if (philo[i].nb_meal < philo->data_ptr->max_eat)
 		{
-			pthread_mutex_unlock(&philo->data_ptr->check_eat);
+			pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
 			return (0);
 		}
 		i++;
 	}
-	pthread_mutex_unlock(&philo->data_ptr->check_eat);
+	pthread_mutex_unlock(&philo->data_ptr->check_time_eat);
 	return (1);
+}
+
+t_bool	ft_check_die(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data_ptr->check_die);
+	if (!philo->data_ptr->die)
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
+		return (0);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
+		return (1);
+	}
 }
 
 void	ft_destroy(t_data *data)
@@ -88,5 +103,5 @@ void	ft_destroy(t_data *data)
 	free(data->fork);
 	pthread_mutex_destroy(&data->mutex);
 	pthread_mutex_destroy(&data->check_die);
-	pthread_mutex_destroy(&data->check_eat);
+	pthread_mutex_destroy(&data->check_time_eat);
 }
