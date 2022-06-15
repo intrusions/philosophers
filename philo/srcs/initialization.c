@@ -105,6 +105,13 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 	i = 0;
 	usleep(100);
 	ft_death(data, philo);
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_join(philo[i].philo_thread, NULL))
+			return (0);
+		i++;
+	}
 	ft_destroy(data);
 	free(philo);
 	return (1);

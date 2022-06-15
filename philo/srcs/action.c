@@ -89,10 +89,4 @@ void	ft_death(t_data *data, t_philo *philo)
 			i++;
 		}	
 	}
-	i = -1;
-	while (++i < data->nb_philo)
-	{
-		if (pthread_join(philo[i].philo_thread, NULL))
-			return ;
-	}
 }
