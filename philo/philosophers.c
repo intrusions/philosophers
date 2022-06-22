@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/22 17:59:03 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:36:38 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_eat_and_more(t_philo *philo)
 {
-	if (!ft_check_die(philo))
+	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
 		ft_eat(philo);
-	if (!ft_check_die(philo))
+	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
 		ft_sleep(philo, philo->data_ptr->tts * 1000);
-	if (!ft_check_die(philo))
+	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
 		ft_think(philo);
 	usleep(500);
 }
