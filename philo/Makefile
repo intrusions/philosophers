@@ -4,14 +4,15 @@ SRCS		=	philosophers.c				\
 				srcs/parsing.c				\
 				srcs/action.c				\
 				srcs/fork.c					\
+				srcs/death.c				\
 
 OBJS		=	$(SRCS:.c=.o)
 
-CC			=	gcc
+CC			=	clang
 
 RM			=	rm -f
 
-CFLAGS		= 	-Wall -Wextra -Werror #-g3  -fsanitize=thread
+CFLAGS		= 	-Wall -Wextra -Werror -g3 #-fsanitize=thread
 
 CPPFLAGS	=	-I./includes
 

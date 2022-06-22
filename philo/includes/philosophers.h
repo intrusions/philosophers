@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xel <xel@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/15 10:42:39 by xel              ###   ########.fr       */
+/*   Updated: 2022/06/22 14:38:54 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ typedef struct s_data
 	int				die;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	check_last_eat;
-	pthread_mutex_t	check_max_eat;
+	pthread_mutex_t	check_eat;
 	pthread_mutex_t	check_die;
 }	t_data;
 
@@ -105,7 +104,7 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo);
 // Principal function about routine of philosophers
 void	*ft_loop(t_philo *philo);
 // Check if all the philosophers have not eaten more times than the max
-t_bool	ft_check_max_eat(t_philo *philo);
+t_bool	ft_check_eat(t_philo *philo);
 // Function to eat
 void	ft_eat(t_philo *philo);
 // Function to sleep
@@ -122,6 +121,8 @@ void	ft_lock_fork(t_philo *philo);
 void	ft_unlock_fork(t_philo *philo);
 // Function to check die
 t_bool	ft_check_die(t_philo *philo);
+// Function to usleep
+void	ft_usleep(t_philo *philo, int tts);
 
 // ========================================================================= //
 //                                    Utils                                  //
