@@ -14,7 +14,7 @@
 
 t_bool	ft_check_input_value(int argc, char **argv, t_data *data)
 {
-	if ((data->nb_philo <= 0 || data->nb_philo > 120)
+	if ((data->nb_philo <= 0)
 		|| data->ttd <= 0 || data->tte <= 0 || data->tts <= 0)
 		return (0);
 	if (argc == 6)
@@ -40,12 +40,10 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 	data->die = 0;
 	if (!ft_check_input_value(argc, argv, data))
 		return (0);
-	if (pthread_mutex_init(&data->mutex, NULL))
-		return (0);
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
 		return (0);
-	if (!ft_init_fork_and_check_die(data))
+	if (!ft_init_fork_and_mutex(data))
 		return (0);
 	return (1);
 }
@@ -70,7 +68,7 @@ t_philo	*ft_fill_philo_struct(t_data *data)
 	return (philo);
 }
 
-t_bool	ft_init_fork_and_check_die(t_data *data)
+t_bool	ft_init_fork_and_mutex(t_data *data)
 {
 	int	i;
 
@@ -81,6 +79,8 @@ t_bool	ft_init_fork_and_check_die(t_data *data)
 			return (0);
 		i++;
 	}
+	if (pthread_mutex_init(&data->write, NULL))
+		return (0);
 	if (pthread_mutex_init(&data->check_die, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_max_eat, NULL))

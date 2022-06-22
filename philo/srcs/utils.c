@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/22 18:20:18 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/23 00:00:04 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_destroy(t_data *data)
 	}
 	i = 0;
 	free(data->fork);
-	pthread_mutex_destroy(&data->mutex);
+	pthread_mutex_destroy(&data->write);
 	pthread_mutex_destroy(&data->check_die);
 	pthread_mutex_destroy(&data->check_max_eat);
 	pthread_mutex_destroy(&data->check_last_eat);
@@ -75,4 +75,10 @@ t_bool	ft_check_die(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->data_ptr->check_die);
 	return (1);
+}
+
+void	ft_usleep(t_philo *philo, int tts)
+{
+	if (!ft_check_die(philo))
+		usleep(tts);
 }

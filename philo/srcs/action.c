@@ -14,7 +14,7 @@
 
 void	ft_write(t_philo *philo, int what_message)
 {
-	pthread_mutex_lock(&philo->data_ptr->mutex);
+	pthread_mutex_lock(&philo->data_ptr->write);
 	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
 	{
 		if (what_message == THINK)
@@ -33,19 +33,13 @@ void	ft_write(t_philo *philo, int what_message)
 	else if (what_message == DIE && !ft_check_eat(philo - (philo->id - 1)))
 		printf(RED "%ld - Philosophers %d hes died\n", \
 		ft_get_time() - philo->data_ptr->time, philo->id);
-	pthread_mutex_unlock(&philo->data_ptr->mutex);
+	pthread_mutex_unlock(&philo->data_ptr->write);
 }
 
 void	ft_think(t_philo *philo)
 {
 	if (!ft_check_die(philo))
 		ft_write(philo, THINK);
-}
-
-void	ft_usleep(t_philo *philo, int tts)
-{
-	if (!ft_check_die(philo))
-		usleep(tts);
 }
 
 void	ft_sleep(t_philo *philo, int tts)

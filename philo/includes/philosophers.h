@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/22 18:17:20 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/22 23:22:58 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 typedef int	t_bool;
 
 // ========================================================================= //
-//                                 Strucutre                                 //
+//                                 Structure                                 //
 // ========================================================================= //
 
 typedef struct s_data
@@ -65,10 +65,10 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				max_eat;
-	long			time;
 	int				die;
+	long			time;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	write;
 	pthread_mutex_t	check_max_eat;
 	pthread_mutex_t	check_last_eat;
 	pthread_mutex_t	check_die;
@@ -89,10 +89,12 @@ typedef struct s_philo
 
 // Check if all parameters are only int
 t_bool	ft_check_arg(int argc, char **argv);
-// Fill the data structure with input value, and tcheck if value are valid
+// Check if all parameters are not 0
+t_bool	ft_check_input_value(int argc, char **argv, t_data *data);
+// If input is valid, fill the data structure with value
 t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data);
-// Init a mutex array called fork, in data strucutre
-t_bool	ft_init_fork_and_check_die(t_data *data);
+// Init a mutex array called fork, in data strucutre, and other secondary mutex
+t_bool	ft_init_fork_and_mutex(t_data *data);
 // Creat an array of t_philo, one per philo, with info about eatch philo inside
 t_philo	*ft_fill_philo_struct(t_data *data);
 // Creat a thread per philo, with ft_loop in function, and t_philo in params
@@ -104,6 +106,8 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo);
 
 // Principal function about routine of philosophers
 void	*ft_loop(t_philo *philo);
+// Function to call other routine function
+void	ft_eat_and_more(t_philo *philo);
 // Check if all the philosophers have not eaten more times than the max
 t_bool	ft_check_eat(t_philo *philo);
 // Function to eat
@@ -116,13 +120,13 @@ void	ft_think(t_philo *data);
 void	ft_death(t_data *data, t_philo *philo);
 // Function to print message
 void	ft_write(t_philo *philo, int what_message);
-// Function to lock fork
+// Function to lock fork on the left and right side
 void	ft_lock_fork(t_philo *philo);
 // Function ton unlock fork
 void	ft_unlock_fork(t_philo *philo);
-// Function to check die
+// Function to check if a philo is die
 t_bool	ft_check_die(t_philo *philo);
-// Function to usleep
+// Function to usleep without sleep message
 void	ft_usleep(t_philo *philo, int tts);
 
 // ========================================================================= //
@@ -135,7 +139,5 @@ int		ft_atoi(const char *str);
 long	ft_get_time(void);
 // Function to destroy and free all memory allocated by mutex
 void	ft_destroy(t_data *data);
-// Function to theck if an input value is smaller than or equal to 0
-t_bool	ft_check_input_value(int argc, char **argv, t_data *data);
 
 #endif
