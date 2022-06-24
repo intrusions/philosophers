@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/24 14:40:38 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:51:46 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_bool	ft_check_eat(t_philo *philo);
 // Function to eat
 void	ft_eat(t_philo *philo);
 // Function to sleep
-void	ft_sleep(t_philo *philo, int tts);
+void	ft_sleep(t_philo *philo, long long tts);
 // Function to think
 void	ft_think(t_philo *data);
 //  Function to tcheck if a philo diying
@@ -127,7 +127,7 @@ void	ft_unlock_fork(t_philo *philo);
 // Function to check if a philo is die
 t_bool	ft_check_die(t_philo *philo);
 // Function to usleep without sleep message
-void	ft_usleep(t_philo *philo, int tts);
+void	ft_usleep(t_philo *philo, long long tts);
 
 // ========================================================================= //
 //                                    Utils                                  //

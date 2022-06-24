@@ -42,12 +42,12 @@ void	ft_think(t_philo *philo)
 		ft_write(philo, THINK);
 }
 
-void	ft_sleep(t_philo *philo, int tts)
+void	ft_sleep(t_philo *philo, long long tts)
 {
 	if (!ft_check_die(philo))
 	{
 		ft_write(philo, SLEEP);
-		usleep(tts);
+		ft_usleep(philo, tts);
 	}
 }
 
