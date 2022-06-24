@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/23 14:50:00 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:49:21 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ int	main(int argc, char **argv)
 	t_philo		*philo;
 
 	if (!ft_fill_data_struct(argc, argv, &data))
-		return (ft_destroy(&data), 0);
+		return (0);
 	philo = ft_fill_philo_struct(&data);
 	if (!philo)
 		return (ft_destroy(&data), 0);
 	data.philo_ptr = philo;
 	if (ft_init_thread(&data, philo))
 		return (0);
-	else
-		return (ft_destroy(&data), free(philo), 0);
+	return (ft_destroy(&data), free(philo), 0);
 }

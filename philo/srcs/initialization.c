@@ -44,7 +44,7 @@ t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 	if (!data->fork)
 		return (0);
 	if (!ft_init_fork_and_mutex(data))
-		return (0);
+		return (ft_destroy(data), 0);
 	return (1);
 }
 
@@ -103,7 +103,7 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo)
 		i++;
 	}
 	i = 0;
-	usleep(100);
+	usleep(50);
 	ft_death(data, philo);
 	while (i < data->nb_philo)
 	{
