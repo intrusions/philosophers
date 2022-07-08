@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/24 20:51:46 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/07/09 00:11:58 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ typedef struct s_philo
 //                               Initialization                              //
 // ========================================================================= //
 
-// Check if all parameters are only int
+// Check if all parameters are only int, and if argc is valid
 t_bool	ft_check_arg(int argc, char **argv);
-// Check if all parameters are not 0
+// Check if all parameters are not or less 0
 t_bool	ft_check_input_value(int argc, char **argv, t_data *data);
 // If input is valid, fill the data structure with value
 t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data);
@@ -104,19 +104,19 @@ t_bool	ft_init_thread(t_data *data, t_philo *philo);
 //                                About routine                              //
 // ========================================================================= //
 
-// Principal function about routine of philosophers
+// Principal function to synchronize the launch of all philo
 void	*ft_loop(t_philo *philo);
-// Function to call other routine function
+// Function to call routine function
 void	ft_eat_and_more(t_philo *philo);
 // Check if all the philosophers have not eaten more times than the max
-t_bool	ft_check_eat(t_philo *philo);
+t_bool	ft_check_max_eat(t_philo *philo);
 // Function to eat
 void	ft_eat(t_philo *philo);
 // Function to sleep
 void	ft_sleep(t_philo *philo, long long tts);
 // Function to think
 void	ft_think(t_philo *data);
-//  Function to tcheck if a philo diying
+//  Function to tcheck and set a variable if the time_to_eat is to exceed
 void	ft_death(t_data *data, t_philo *philo);
 // Function to print message
 void	ft_write(t_philo *philo, int what_message);
@@ -126,7 +126,7 @@ void	ft_lock_fork(t_philo *philo);
 void	ft_unlock_fork(t_philo *philo);
 // Function to check if a philo is die
 t_bool	ft_check_die(t_philo *philo);
-// Function to usleep without sleep message
+// Function to usleep without sleep message, 50ms
 void	ft_usleep(t_philo *philo, long long tts);
 
 // ========================================================================= //

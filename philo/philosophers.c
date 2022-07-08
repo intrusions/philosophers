@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:06:55 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/24 20:52:57 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/07/09 00:03:07 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_eat_and_more(t_philo *philo)
 {
-	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
+	if (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		ft_eat(philo);
-	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
+	if (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		ft_sleep(philo, philo->data_ptr->tts * 1000);
-	if (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
+	if (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		ft_think(philo);
 	usleep(500);
 }
@@ -44,7 +44,7 @@ void	*ft_loop(t_philo *philo)
 	}
 	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
 		ft_usleep(philo, philo->data_ptr->tte * 1000);
-	while (!ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
+	while (!ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		ft_eat_and_more(philo);
 	return (0);
 }

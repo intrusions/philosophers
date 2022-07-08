@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:12:28 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/24 21:01:01 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/07/09 00:07:46 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ long	ft_get_time(void)
 	return (time);
 }
 
-t_bool	ft_check_eat(t_philo *philo)
+t_bool	ft_check_max_eat(t_philo *philo)
 {
 	int	i;
 
@@ -60,9 +60,9 @@ void	ft_destroy(t_data *data)
 	i = 0;
 	free(data->fork);
 	pthread_mutex_destroy(&data->write);
-	pthread_mutex_destroy(&data->check_die);
 	pthread_mutex_destroy(&data->check_max_eat);
 	pthread_mutex_destroy(&data->check_last_eat);
+	pthread_mutex_destroy(&data->check_die);
 }
 
 t_bool	ft_check_die(t_philo *philo)
@@ -83,6 +83,6 @@ void	ft_usleep(t_philo *philo, long long tts)
 
 	start_time = ft_get_time();
 	while (((ft_get_time() - start_time) * 1000) < tts
-		&& !ft_check_die(philo) && !ft_check_eat(philo - (philo->id - 1)))
+		&& !ft_check_die(philo) && !ft_check_max_eat(philo - (philo->id - 1)))
 		usleep(50);
 }
