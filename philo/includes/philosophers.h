@@ -6,7 +6,7 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 20:09:20 by jucheval          #+#    #+#             */
-/*   Updated: 2022/07/09 00:11:58 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/07/09 23:41:55 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef int	t_bool;
 
 typedef struct s_data
 {
-	struct s_philo	*philo_ptr;
 	int				nb_philo;
 	int				ttd;
 	int				tte;

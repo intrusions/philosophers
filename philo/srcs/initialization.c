@@ -12,22 +12,6 @@
 
 #include "philosophers.h"
 
-t_bool	ft_check_input_value(int argc, char **argv, t_data *data)
-{
-	if ((data->nb_philo <= 0)
-		|| data->ttd <= 0 || data->tte <= 0 || data->tts <= 0)
-		return (0);
-	if (argc == 6)
-	{
-		data->max_eat = ft_atoi(argv[5]);
-		if (data->max_eat <= 0)
-			return (0);
-	}
-	else
-		data->max_eat = -1;
-	return (1);
-}
-
 t_bool	ft_fill_data_struct(int argc, char **argv, t_data *data)
 {
 	if (!ft_check_arg(argc, argv))
@@ -81,11 +65,11 @@ t_bool	ft_init_fork_and_mutex(t_data *data)
 	}
 	if (pthread_mutex_init(&data->write, NULL))
 		return (0);
-	if (pthread_mutex_init(&data->check_die, NULL))
-		return (0);
 	if (pthread_mutex_init(&data->check_max_eat, NULL))
 		return (0);
 	if (pthread_mutex_init(&data->check_last_eat, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->check_die, NULL))
 		return (0);
 	return (1);
 }

@@ -31,7 +31,7 @@ void	ft_write(t_philo *philo, int what_message)
 			ft_get_time() - philo->data_ptr->time, philo->id);
 	}
 	else if (what_message == DIE && !ft_check_max_eat(philo - (philo->id - 1)))
-		printf(RED "%ld - Philosophers %d hes died\n", \
+		printf(RED "%ld - Philosophers %d died\n", \
 		ft_get_time() - philo->data_ptr->time, philo->id);
 	pthread_mutex_unlock(&philo->data_ptr->write);
 }

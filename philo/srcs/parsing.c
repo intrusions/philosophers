@@ -6,11 +6,27 @@
 /*   By: jucheval <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 00:32:53 by jucheval          #+#    #+#             */
-/*   Updated: 2022/06/14 14:55:25 by jucheval         ###   ########.fr       */
+/*   Updated: 2022/07/09 23:26:35 by jucheval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+t_bool	ft_check_input_value(int argc, char **argv, t_data *data)
+{
+	if ((data->nb_philo <= 0)
+		|| data->ttd <= 0 || data->tte <= 0 || data->tts <= 0)
+		return (0);
+	if (argc == 6)
+	{
+		data->max_eat = ft_atoi(argv[5]);
+		if (data->max_eat <= 0)
+			return (0);
+	}
+	else
+		data->max_eat = -1;
+	return (1);
+}
 
 t_bool	ft_check_arg(int argc, char **argv)
 {
